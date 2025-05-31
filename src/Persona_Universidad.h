@@ -25,11 +25,8 @@ public:
     //Ingresar. 
     
     void solicitarDatos() {
-        cout << "Nombre: ";
-        cin.ignore();
-        getline(cin, nombre);
-        cout << "Cedula: ";
-        getline(cin, cedula);
+        string nombre=leerCadenaNoVacia("Ingrese el nombre: ");
+        string cedula=leerCedulaValida("Ingrese la cédula: ");
     }
 
     //Actualizar. 

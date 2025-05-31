@@ -10,6 +10,7 @@
 #include "Horarios.h"
 #include "Cruze_horarios.h"
 #include "raylib.h"
+#include "Validaciones.h"
 using namespace std;
 
 //Variables constantes.
@@ -39,10 +40,9 @@ int capacidad_3d1 = 0;
 int capacidad_3d2 = 0;
 int contador_profesores = 0;
 int contador_asignaturas = 0;
-int opcion;
+int opcion=0;
     
 
-cout<<"Hola mundo!";
 
     do{
     	//Opciones.
@@ -51,9 +51,7 @@ cout<<"Hola mundo!";
     	cout<<"1.Modulo Estudiante."<<endl;
     	cout<<"2.Modulo Profesor."<<endl;
     	cout<<"3.Salir del programa."<<endl;
-    	cout<<"Opcion: "<<endl;
-    	cin>>opcion; 
-        cin.ignore();
+    	opcion = leerOpcionMenu("Opcion: ", 1, 3);
     	
     	//Casos. 
     	
@@ -70,16 +68,15 @@ cout<<"Hola mundo!";
     	       cout<<"4.Mostrar."<<endl;
                cout<<"5.Llenar materias"<<endl;
                cout<<"6.Horarios"<<endl;
-    	       cout<<"6.Volver al menu principal."<<endl;
-    	       cout<<"Opcion: "<<endl;
-    	       cin>>opcion_estudiante;
-               cin.ignore(); 
+    	       cout<<"7.Volver al menu principal."<<endl;
+    	       opcion_estudiante= leerOpcionMenu("Opcion: ", 1, 7);
+
+              
     	       //Casos. 
     	         switch(opcion_estudiante) {
                 case 1: { // Ingresar
-            cout << "Ingrese la sección (3D1 o 3D2): ";
-            string seccion; 
-            getline(cin >> ws, seccion);
+             string seccion = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
+            
             if ((seccion == "3D1")||(seccion=="3d1")) {
                 cout << "Ingresando estudiante a 3D1..." << endl;
                 if (capacidad_3d1 < capacidad_seccion) {
@@ -104,15 +101,10 @@ cout<<"Hola mundo!";
             }
             break;
         }          
-
-
                 case 2: { // Eliminar
-                string cedula_eliminar;
-                string seccion_eliminar;
-               cout << "Ingrese la cédula del estudiante a eliminar: ";
-                getline(cin >> ws, cedula_eliminar);
-                cout << "Ingrese la seccion del estudiante a eliminar (3D1, 3D2): ";
-                getline(cin >> ws, seccion_eliminar);
+                string cedula_eliminar = leerCedulaValida("Ingrese la cedula del estudiante a eliminar ");
+                
+                string seccion_eliminar = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
 
                 bool encontrado = false;
                 if ((seccion_eliminar == "3D1")||(seccion_eliminar=="3d1")) {
@@ -149,21 +141,16 @@ cout<<"Hola mundo!";
         }
                 case 3: { // Actualizar
 
-                string seccion_actualizar, cedula_actualizar;                    
+                                  
 
-             cout << "Ingrese la sección del estudiante a actualizar (3D1, 3D2): ";
-              getline(cin >> ws, seccion_actualizar);
-                 cout << "Ingrese la cédula del estudiante a actualizar: ";
-                 getline(cin >> ws, cedula_actualizar);
-                    bool encontrado = false;
-                     if (seccion_actualizar == "3D1" || seccion_actualizar == "3d1") {
-                     for (int i = 0; i < capacidad_3d1; ++i) {
-                        if (Estudiante_3d1[i].getCedula() == cedula_actualizar) {
-                        string nuevo_nombre, nueva_cedula;
-                        cout << "Nuevo nombre: ";
-                         getline(cin, nuevo_nombre);
-                        cout << "Nueva cédula: ";
-                        getline(cin, nueva_cedula);
+             string seccion_actualizar = leerSeccionValida("Ingrese la sección del estudiante a actualizar (3D1 o 3D2): ");
+             string cedula_actualizar = leerCedulaValida("Ingrese la cédula del estudiante a actualizar: ");
+             bool encontrado = false;
+             if (seccion_actualizar == "3D1" || seccion_actualizar == "3d1") {
+                 for (int i = 0; i < capacidad_3d1; ++i) {
+                     if (Estudiante_3d1[i].getCedula() == cedula_actualizar) {
+                         string nuevo_nombre = leerCadenaNoVacia("Ingrese el nuevo nombre: ");
+                         string nueva_cedula = leerCedulaValida("Ingrese la nueva cédula: ");
                         Estudiante_3d1[i].actualizarDatos(nuevo_nombre, nueva_cedula);
                         cout << "Datos actualizados." << endl;
                         encontrado = true;
@@ -174,11 +161,8 @@ cout<<"Hola mundo!";
                     if (seccion_actualizar == "3D2" || seccion_actualizar == "3d2") {
                      for (int i = 0; i < capacidad_3d2; ++i) {
                         if (Estudiante_3d2[i].getCedula() == cedula_actualizar) {
-                        string nuevo_nombre, nueva_cedula;
-                        cout << "Nuevo nombre: ";
-                         getline(cin, nuevo_nombre);
-                        cout << "Nueva cédula: ";
-                        getline(cin, nueva_cedula);
+                       string nuevo_nombre = leerCadenaNoVacia("Ingrese el nuevo nombre: ");
+                         string nueva_cedula = leerCedulaValida("Ingrese la nueva cédula: ");
                         Estudiante_3d2[i].actualizarDatos(nuevo_nombre, nueva_cedula);
                         cout << "Datos actualizados." << endl;
                         encontrado = true;
@@ -204,11 +188,9 @@ cout<<"Hola mundo!";
             break;
 }
                 case 5: { //Llenar materias
-                string cedulaE, seccionE;
-                cout<<"Ingrese su cedula para ingresar sus materias"<<endl;
-                    getline(cin>>ws, cedulaE);
-                cout<<"Ingrese su seccion (3D1 o 3D2): "<<endl;
-                getline(cin>>ws, seccionE);
+                string seccionE = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
+                string cedulaE=leerCedulaValida("Ingrese la cedula del estudiante: ");
+               
                 if (seccionE == "3D1" || seccionE == "3d1") {
                     for (int i = 0; i < capacidad_3d1; ++i) {
                         if (Estudiante_3d1[i].getCedula() == cedulaE) {
@@ -232,13 +214,9 @@ cout<<"Hola mundo!";
                 break;
             }
                 case 6: {//Horarios
-                        string cedula;
-                        string seccion;
-                    cout<<"Ingresa su cedula"<<endl;
-                    getline(cin>>ws,cedula );
-                    cout<< "ingrese su seccion"<<endl;
-                    getline(cin>>ws, seccion);
-                            if((seccion=="3d1")||(seccion=="3D1")){
+                      string seccion = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
+                string cedula=leerCedulaValida("Ingrese la cedula del estudiante: ");
+                    if((seccion=="3d1")||(seccion=="3D1")){
                                   for (int i = 0; i < capacidad_3d1; ++i) {
                                      if (Estudiante_3d1[i].getCedula() == cedula) {
                                         H_Estudiantes_3d1[i].funcion_horario_estudiante();
@@ -276,7 +254,7 @@ cout<<"Hola mundo!";
             }
     		    case 2: { //Modulo profesor
 			     //Variables.
-			    int opcion_profesor;
+			    int opcion_profesor=0;
 			    //Opciones. 
                 do{
 			   cout<<"------PROFESORES------"<<endl; 
@@ -288,9 +266,8 @@ cout<<"Hola mundo!";
                cout<<"6.Horarios."<<endl;
                cout<<"7.Cruze Horario"<<endl;
                cout<<"8.Volver al menu"<<endl;         
-    	       cout<<"Opcion: "<<endl;
-    	       cin>>opcion_profesor; 
-    	       cin.ignore();
+    	      opcion_profesor = leerOpcionMenu("Opcion: ", 1, 8);
+
     	       //Casos. 
     	       switch(opcion_profesor){
     	       	   
@@ -306,9 +283,12 @@ cout<<"Hola mundo!";
                 break;
     }
     case 2: { // Eliminar
-        string cedula_eliminar;
-        cout << "Ingrese la cédula del profesor a eliminar: ";
-        getline(cin >> ws, cedula_eliminar);
+         string cedula_eliminar = leerCedulaValida("Ingrese la cédula Profesor: ");
+        // Buscar el profesor por cédula y eliminarlo.
+        if (contador_profesores == 0) {
+            cout << "No hay profesores registrados." << endl;
+            break;
+        }
         bool encontrado = false;
         for (int i = 0; i < contador_profesores; ++i) {
             if (profesores[i].getCedula() == cedula_eliminar) {
@@ -327,17 +307,12 @@ cout<<"Hola mundo!";
         break;
     }
     case 3: { // Actualizar
-        string cedula_actualizar;
-        cout << "Ingrese la cédula del profesor a actualizar: ";
-        getline(cin >> ws, cedula_actualizar);
+         string cedula_actualizar = leerCedulaValida("Ingrese la cédula Profesor: ");
         bool encontrado = false;
         for (int i = 0; i < contador_profesores; ++i) {
             if (profesores[i].getCedula() == cedula_actualizar) {
-                string nuevo_nombre, nueva_cedula;
-                cout << "Nuevo nombre: ";
-                getline(cin, nuevo_nombre);
-                cout << "Nueva cédula: ";
-                getline(cin, nueva_cedula);
+                string nuevo_nombre = leerCadenaNoVacia("Ingrese el nuevo nombre: ");
+                string nueva_cedula = leerCedulaValida("Ingrese la nueva cédula: ");
                 profesores[i].actualizarDatos(nuevo_nombre, nueva_cedula);
                 cout << "Datos actualizados." << endl;
                 encontrado = true;
@@ -357,9 +332,7 @@ cout<<"Hola mundo!";
     }
     case 5: {
         // Agregar materias profesor
-        string cedula_profesor;
-        cout << "Ingrese la cédula del profesor: ";
-        getline(cin >> ws, cedula_profesor);
+        string cedula_profesor = leerCedulaValida("Ingrese la cédula del profesor: ");
         bool encontrado = false;
         for (int i = 0; i < capacidad_profesores; ++i) {
             if (profesores[i].getCedula() == cedula_profesor) {
@@ -374,9 +347,7 @@ cout<<"Hola mundo!";
        break;
    }
     case 6:{ // Horarios
-        string cedula;
-        cout<<"Ingrese su cedula"<<endl;
-        getline(cin>>ws, cedula);
+        string cedula = leerCedulaValida("Ingrese su cédula: ");
         for(int i=0; i<capacidad_profesores;i++){
             if(cedula==profesores[i].getCedula()){
                 H_Profesor[i].ingresarHorarioProfesor();
@@ -386,9 +357,7 @@ cout<<"Hola mundo!";
         break;
     }
    case 7:{//Cruze Horarios
-    string cedula;
-    cout<<"Ingrese su cedula: "<<endl;
-    getline(cin>>ws, cedula);
+    string cedula = leerCedulaValida("Ingrese su cédula: ");
     for(int i=0; i<capacidad_profesores;i++){
         if(cedula==profesores[i].getCedula()){
             H_Profesor[i].compararHorariosYGenerarReprogramacion();
