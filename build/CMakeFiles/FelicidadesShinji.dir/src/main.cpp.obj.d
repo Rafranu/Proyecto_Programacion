@@ -140,6 +140,12 @@ CMakeFiles/FelicidadesShinji.dir/src/main.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.1.0/istream \
  C:/msys64/ucrt64/include/c++/15.1.0/bits/istream.tcc \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Persona_Universidad.h \
+ C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Validaciones.h \
+ C:/msys64/ucrt64/include/c++/15.1.0/fstream \
+ C:/msys64/ucrt64/include/c++/15.1.0/bits/codecvt.h \
+ C:/msys64/ucrt64/include/c++/15.1.0/x86_64-w64-mingw32/bits/basic_file.h \
+ C:/msys64/ucrt64/include/c++/15.1.0/x86_64-w64-mingw32/bits/c++io.h \
+ C:/msys64/ucrt64/include/c++/15.1.0/bits/fstream.tcc \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Estudiante.h \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Profesor.h \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Asignatura.h \
@@ -149,4 +155,4 @@ CMakeFiles/FelicidadesShinji.dir/src/main.cpp.obj: \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/stdarg.h \
  C:/msys64/ucrt64/include/stdarg.h \
  C:/msys64/ucrt64/include/_mingw_stdarg.h \
- C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Validaciones.h
+ C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Archivos.h

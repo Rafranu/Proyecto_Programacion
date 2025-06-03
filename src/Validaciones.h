@@ -1,26 +1,25 @@
+#pragma once
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 // Función para validar un entero dentro de un rango
-int leerEnteroEnRango(const string& mensaje, int min, int max) {
+ int leerEnteroEnRango(const string& mensaje, int min, int max) {
     int valor;
     string entrada;
     while (true) {
         cout << mensaje;
-        getline(cin, entrada);
-        try {
-            valor = stoi(entrada);
+       cin>>valor;
+            
             if (valor >= min && valor <= max) {
                 return valor;
             } else {
                 cout << "Valor fuera de rango (" << min << "-" << max << "). Intente de nuevo." << endl;
             }
-        } catch (...) {
-            cout << "Entrada inválida. Intente de nuevo." << endl;
+        
         }
     }
-}
 
 // Función para leer una cadena no vacía
 string leerCadenaNoVacia(const string& mensaje) {
@@ -49,7 +48,7 @@ string leerSeccionValida(const string& mensaje) {
         getline(cin >> ws, seccion);
         // Convierte a mayúsculas para comparar
         for (auto& c : seccion) c = toupper(c);
-        if (seccion == "3D1" || seccion == "3D2"|| seccion == "3d1" || seccion == "3d2") {  
+        if (seccion == "3D1" || seccion == "3D2") {  
             return seccion;
         } else {
             cout << "Sección inválida. Debe ser 3D1 o 3D2." << endl;

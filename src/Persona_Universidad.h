@@ -1,17 +1,21 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Validaciones.h"
 using namespace std;
+//Funciones de validacion.
+string leerCedulaValida(const string& mensaje);
+string leerCadenaNoVacia(const string& mensaje);
 
 //Clase Base.
 class Persona_Universidad {
-	
-	//Atributos. 
+   protected:
+    //Atributos. 
 	
     string nombre;
     string cedula;
 
-public:
+    public:
 	
     //Constructores.
     
@@ -22,16 +26,18 @@ public:
     string getNombre() const { return nombre; }
     string getCedula() const { return cedula; }
 
+    string setCedula(string& nueva_cedula) { cedula = nueva_cedula; return cedula; }
+
     //Ingresar. 
     
     void solicitarDatos() {
-        string nombre=leerCadenaNoVacia("Ingrese el nombre: ");
-        string cedula=leerCedulaValida("Ingrese la cédula: ");
+    nombre=leerCadenaNoVacia("Ingrese el nombre: ");
+    cedula=leerCedulaValida("Ingrese la cédula: ");
     }
 
     //Actualizar. 
     
-    void actualizarDatos(string& nuevo_nombre,string& nueva_cedula) {
+    void actualizarDatos(string nuevo_nombre,string nueva_cedula) {
         nombre = nuevo_nombre;
         cedula = nueva_cedula;
     }

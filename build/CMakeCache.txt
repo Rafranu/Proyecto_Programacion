@@ -35,8 +35,8 @@ CMAKE_BUILD_TYPE:STRING=Debug
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
-//No help, variable specified on the command line.
-CMAKE_CXX_COMPILER:FILEPATH=C:/msys64/ucrt64/bin/g++.exe
+//CXX compiler
+CMAKE_CXX_COMPILER:STRING=C:/msys64/ucrt64/bin/g++.exe
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -64,8 +64,8 @@ CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 //Libraries linked by default with all C++ applications.
 CMAKE_CXX_STANDARD_LIBRARIES:STRING=-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
 
-//No help, variable specified on the command line.
-CMAKE_C_COMPILER:FILEPATH=C:/msys64/ucrt64/bin/gcc.exe
+//C compiler
+CMAKE_C_COMPILER:STRING=C:/msys64/ucrt64/bin/gcc.exe
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -157,7 +157,7 @@ CMAKE_INSTALL_MANDIR:PATH=
 CMAKE_INSTALL_OLDINCLUDEDIR:PATH=/usr/include
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/Project
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/FelicidadesShinji
 
 //Run-time variable data (LOCALSTATEDIR/run)
 CMAKE_INSTALL_RUNSTATEDIR:PATH=
@@ -385,35 +385,8 @@ OPENGL_glu_LIBRARY:STRING=glu32
 //Platform to build for.
 PLATFORM:STRING=Desktop
 
-//Value Computed by CMake
-Project_BINARY_DIR:STATIC=C:/Users/PC/Documents/GitHub/Proyecto_Programacion/build
-
-//Value Computed by CMake
-Project_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-Project_SOURCE_DIR:STATIC=C:/Users/PC/Documents/GitHub/Proyecto_Programacion
-
 //Link raylib against system GLFW instead of embedded one
 USE_EXTERNAL_GLFW:STRING=OFF
-
-//Value Computed by CMake
-WAHAHA!BOCCHISUPERFUERTE_BINARY_DIR:STATIC=C:/Users/PC/Documents/GitHub/Proyecto_Programacion/build
-
-//Value Computed by CMake
-WAHAHA!BOCCHISUPERFUERTE_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-WAHAHA!BOCCHISUPERFUERTE_SOURCE_DIR:STATIC=C:/Users/PC/Documents/GitHub/Proyecto_Programacion
-
-//Value Computed by CMake
-WAHAHA!_BINARY_DIR:STATIC=C:/Users/PC/Documents/GitHub/Proyecto_Programacion/build
-
-//Value Computed by CMake
-WAHAHA!_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-WAHAHA!_SOURCE_DIR:STATIC=C:/Users/PC/Documents/GitHub/Proyecto_Programacion
 
 //Compile static library as position-independent code
 WITH_PIC:BOOL=OFF
@@ -676,5 +649,5 @@ USE_EXTERNAL_GLFW-STRINGS:INTERNAL=OFF;IF_POSSIBLE;ON
 //Have include xinput.h
 XINPUT_H_FOUND:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
-_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/Project
+_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/FelicidadesShinji
 

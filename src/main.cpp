@@ -11,6 +11,8 @@
 #include "Cruze_horarios.h"
 #include "raylib.h"
 #include "Validaciones.h"
+#include "Archivos.h"
+#include <fstream>
 using namespace std;
 
 //Variables constantes.
@@ -19,8 +21,6 @@ using namespace std;
 //Profesores y asignaturas.
 const int capacidad_profesores = 5;
 const int capacidad_asignaturas = 6;
-
-
 
 
 
@@ -40,8 +40,10 @@ int capacidad_3d1 = 0;
 int capacidad_3d2 = 0;
 int contador_profesores = 0;
 int contador_asignaturas = 0;
-int opcion=0;
-    
+int opcion;
+capacidad_3d1 = cargarEstudiantes("estudiantes_3d1.csv", Estudiante_3d1, capacidad_seccion);
+capacidad_3d2 = cargarEstudiantes("estudiantes_3d2.csv", Estudiante_3d2, capacidad_seccion);
+contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_profesores);  
 
 
     do{
@@ -57,7 +59,7 @@ int opcion=0;
     	
     	        switch(opcion){
     	        case 1: { //Modulo estudiante
-    		   //Variables.
+    		  
 			   int opcion_estudiante;
 			   //Opciones. 
                do{
@@ -219,7 +221,7 @@ int opcion=0;
                     if((seccion=="3d1")||(seccion=="3D1")){
                                   for (int i = 0; i < capacidad_3d1; ++i) {
                                      if (Estudiante_3d1[i].getCedula() == cedula) {
-                                        H_Estudiantes_3d1[i].funcion_horario_estudiante();
+                                        H_Estudiantes_3d1[i].funcion_horario_estudiante(Estudiante_3d1[i]);
                                         H_Estudiantes_3d1[i].compararHorariosYGenerarReprogramacion();
                                         cout<<"Horario agragado"<<endl;
                                    }    break;
@@ -228,7 +230,7 @@ int opcion=0;
                             else if((seccion=="3d2")||(seccion=="3D2")){
                                   for (int i = 0; i < capacidad_3d2; ++i) {
                                      if (Estudiante_3d2[i].getCedula() == cedula) {
-                                        H_Estudiantes_3d2[i].funcion_horario_estudiante();
+                                        H_Estudiantes_3d2[i].funcion_horario_estudiante(Estudiante_3d2[i]);
                                         H_Estudiantes_3d2[i].compararHorariosYGenerarReprogramacion();
                                         cout<<"Horario agragado"<<endl;
                                    }    break;
@@ -274,7 +276,9 @@ int opcion=0;
     case 1: { // Ingresar
          if (contador_profesores < capacidad_profesores) {
                     cout << "Ingresando profesor..." << endl;
-                    profesores[contador_profesores].solicitarDatos();
+                     string nuevo_nombre = leerCadenaNoVacia("Ingrese el nuevo nombre: ");
+                    string nueva_cedula = leerCedulaValida("Ingrese la nueva cédula: ");
+                 profesores[contador_profesores].actualizarDatos(nuevo_nombre, nueva_cedula);
                     contador_profesores++;
                     cout << "Profesor ingresado correctamente." << endl;
                 } else {
@@ -284,7 +288,7 @@ int opcion=0;
     }
     case 2: { // Eliminar
          string cedula_eliminar = leerCedulaValida("Ingrese la cédula Profesor: ");
-        // Buscar el profesor por cédula y eliminarlo.
+       
         if (contador_profesores == 0) {
             cout << "No hay profesores registrados." << endl;
             break;
@@ -350,7 +354,7 @@ int opcion=0;
         string cedula = leerCedulaValida("Ingrese su cédula: ");
         for(int i=0; i<capacidad_profesores;i++){
             if(cedula==profesores[i].getCedula()){
-                H_Profesor[i].ingresarHorarioProfesor();
+                H_Profesor[i].ingresarHorarioProfesor(profesores[i]);
             }
         }
 
@@ -384,7 +388,9 @@ int opcion=0;
     	
 	    }while(opcion!=3); 
     
-    
+guardarEstudiantes("estudiantes_3d1.csv", Estudiante_3d1, capacidad_3d1);
+guardarEstudiantes("estudiantes_3d2.csv", Estudiante_3d2, capacidad_3d2);
+guardarProfesores("profesores.csv", profesores, contador_profesores);
     //Fin del programa.
     return 0;
 }

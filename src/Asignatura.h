@@ -13,6 +13,7 @@ class Asignatura :virtual public Estudiante, virtual public Profesor {
     string materias;
 
 public:
+    
     // Constructor de Asignatura: 
     
     Asignatura(string nombre_p = "", string cedula_p = "", string seccion_e = "", string materias_asig = ""): Persona_Universidad(nombre_p, cedula_p), Estudiante(nombre_p, cedula_p, seccion_e), Profesor(nombre_p, cedula_p),materias(materias_asig) {}
@@ -21,7 +22,7 @@ public:
     //Ingresar. 
 
     void ingresar() {
-        Persona_Universidad::solicitarDatos();
+        Estudiante::Persona_Universidad::solicitarDatos();
         cout << "Seccion del Estudiante (si aplica): ";
         string temp_seccion;
         getline(cin, temp_seccion);
@@ -30,7 +31,7 @@ public:
 
     //Actualizar.
     void actualizar(string& nuevo_nombre,string& nueva_cedula) { 
-        Persona_Universidad::actualizarDatos(nuevo_nombre, nueva_cedula);
+        Estudiante::Persona_Universidad::actualizarDatos(nuevo_nombre, nueva_cedula);
     }
 
     //Resetear.
@@ -50,7 +51,7 @@ public:
     void agregar_materias(){
         string temp_materia;
         cout<<"Materia (single): ";
-        cin.ignore();
+       
         getline(cin,temp_materia);
         materias = temp_materia;
         cout << "Materia asignada: " << materias << endl;
