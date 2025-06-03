@@ -54,7 +54,7 @@ int cargarProfesores(const string& filename, Profesor* profesores, int capacidad
     return cantidad;
 }
 // Guarda todos los horarios de una sección
-void guardarHorariosSeccion(const string& filename, Cruse_horarios* horarios, int cantidad) {
+void guardarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
     ofstream archivo(filename);
     for (int k = 0; k < cantidad; ++k) {
         // Guardar cédula para identificar a quién pertenece el horario
@@ -72,7 +72,7 @@ void guardarHorariosSeccion(const string& filename, Cruse_horarios* horarios, in
     }
     archivo.close();
 }
-void cargarHorariosSeccion(const string& filename, Cruse_horarios* horarios, int cantidad) {
+    void cargarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
     ifstream archivo(filename);
     string linea;
     int k = 0;
@@ -80,7 +80,7 @@ void cargarHorariosSeccion(const string& filename, Cruse_horarios* horarios, int
         size_t pos = linea.find(',');
         if (pos == string::npos) continue;
         string cedula = linea.substr(0, pos);
-       // Debes tener un método setCedula en Cruse_horarios o usar el constructor
+       // Debes tener un método setCedula en Horario o usar el constructor
 
         size_t fila_ini = pos + 1;
         for (int i = 0; i < 5; ++i) {

@@ -46,9 +46,10 @@ public:
     const int (&getHorarioFinalCombinado() const)[5][4] {
     return horario_final_combinado;
 }
+ void setHorarioValor(int i, int j, int valor) { horario_final_combinado[i][j] = valor; }
 
     void funcion_horario_estudiante(Estudiante estudiante) {
-       
+
         for (int i = 0; i < dias; ++i) {
             for (int j = 0; j < hora; ++j) {
                 horario_final_combinado[i][j] = 0;

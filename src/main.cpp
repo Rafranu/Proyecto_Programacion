@@ -9,10 +9,10 @@
 #include "Asignatura.h"
 #include "Horarios.h"
 #include "Cruze_horarios.h"
-#include "raylib.h"
 #include "Validaciones.h"
 #include "Archivos.h"
 #include <fstream>
+#include "raylib.h"
 using namespace std;
 
 //Variables constantes.
@@ -33,8 +33,8 @@ Profesor profesores[capacidad_profesores];
 Asignatura asignaturas_profesor[capacidad_asignaturas];
 Asignatura asignaturas_estudiante_3d1[capacidad_asignaturas];
 Asignatura asignaturas_estudiante_3d2[capacidad_asignaturas];
-Cruse_horarios H_Estudiantes_3d1 [capacidad_seccion];
-Cruse_horarios H_Estudiantes_3d2 [capacidad_seccion];
+Horario H_Estudiantes_3d1 [capacidad_seccion];
+Horario H_Estudiantes_3d2 [capacidad_seccion];
 Cruse_horarios H_Profesor [capacidad_profesores];
 int capacidad_3d1 = 0;
 int capacidad_3d2 = 0;
@@ -42,6 +42,7 @@ int contador_profesores = 0;
 int contador_asignaturas = 0;
 int opcion;
 capacidad_3d1 = cargarEstudiantes("estudiantes_3d1.csv", Estudiante_3d1, capacidad_seccion);
+cargarHorariosSeccion("horario_estudiantes_3d1.csv", H_Estudiantes_3d1, capacidad_3d1);
 capacidad_3d2 = cargarEstudiantes("estudiantes_3d2.csv", Estudiante_3d2, capacidad_seccion);
 contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_profesores);  
 
@@ -83,6 +84,7 @@ contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_p
                 cout << "Ingresando estudiante a 3D1..." << endl;
                 if (capacidad_3d1 < capacidad_seccion) {
                         Estudiante_3d1[capacidad_3d1].solicitarDatos();
+                       Estudiante_3d1[capacidad_3d1].setSeccion(seccion);
                         capacidad_3d1++;
                
                 cout << "Estudiante ingresado correctamente." << endl;
@@ -93,6 +95,7 @@ contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_p
                 cout << "Ingresando estudiante a 3D2..." << endl;
                 if (capacidad_3d2 < capacidad_seccion) {
                     Estudiante_3d2[capacidad_3d2].solicitarDatos();
+                    Estudiante_3d2[capacidad_3d2].setSeccion(seccion);
                     capacidad_3d2++;
                     cout << "Estudiante ingresado correctamente." << endl;
                 } else {
@@ -180,12 +183,14 @@ contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_p
         for (int i = 0; i < capacidad_3d1; ++i) {         
         Estudiante_3d1[i].mostrarInformacion();
         asignaturas_estudiante_3d1[i].mostrar();
+        H_Estudiantes_3d1[i].mostrarHorarioFinalCombinado(Estudiante_3d1[i]);
 
 }
         cout << "--- Estudiantes 3D2 ---" << endl;
         for (int i = 0; i < capacidad_3d2; ++i) {
         Estudiante_3d2[i].mostrarInformacion();
         asignaturas_estudiante_3d2[i].mostrar();
+        H_Estudiantes_3d2[i].mostrarHorarioFinalCombinado(Estudiante_3d2[i]);
         }
             break;
 }
@@ -222,7 +227,7 @@ contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_p
                                   for (int i = 0; i < capacidad_3d1; ++i) {
                                      if (Estudiante_3d1[i].getCedula() == cedula) {
                                         H_Estudiantes_3d1[i].funcion_horario_estudiante(Estudiante_3d1[i]);
-                                        H_Estudiantes_3d1[i].compararHorariosYGenerarReprogramacion();
+                                      
                                         cout<<"Horario agragado"<<endl;
                                    }    break;
                                      }
@@ -231,7 +236,7 @@ contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_p
                                   for (int i = 0; i < capacidad_3d2; ++i) {
                                      if (Estudiante_3d2[i].getCedula() == cedula) {
                                         H_Estudiantes_3d2[i].funcion_horario_estudiante(Estudiante_3d2[i]);
-                                        H_Estudiantes_3d2[i].compararHorariosYGenerarReprogramacion();
+                                     
                                         cout<<"Horario agragado"<<endl;
                                    }    break;
                                      }
