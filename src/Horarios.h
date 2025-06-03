@@ -9,7 +9,7 @@ const int capacidad_seccion = 3;
 
 
 
-class Horario : public Estudiante {
+class Horario :virtual public Estudiante {
     // Atributos.
     protected:
     int dias = 5;

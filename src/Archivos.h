@@ -3,6 +3,8 @@
 #include <fstream>
 #include "Cruze_horarios.h"
 
+using namespace std;
+
 // Guardar estudiantes de una sección
 void guardarEstudiantes(const string& filename, Estudiante* estudiantes, int cantidad) {
     ofstream archivo(filename);
@@ -30,6 +32,7 @@ int cargarEstudiantes(const string& filename, Estudiante* estudiantes, int capac
     archivo.close();
     return cantidad;
 }
+
 void guardarProfesores(const string& filename, Profesor* profesores, int cantidad) {
     ofstream archivo(filename);
     for (int i = 0; i < cantidad; ++i) {
@@ -47,22 +50,21 @@ int cargarProfesores(const string& filename, Profesor* profesores, int capacidad
         if (p1 == string::npos) continue;
         nombre = linea.substr(0, p1);
         cedula = linea.substr(p1+1);
-        profesores[cantidad] = Profesor(nombre, cedula); // Use copy assignment
+        profesores[cantidad] = Profesor(nombre, cedula);
         cantidad++;
     }
     archivo.close();
     return cantidad;
 }
+
 // Guarda todos los horarios de una sección
 void guardarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
     ofstream archivo(filename);
     for (int k = 0; k < cantidad; ++k) {
-        // Guardar cédula para identificar a quién pertenece el horario
         archivo << horarios[k].getCedula();
-        // Guardar la matriz de horario (5x4)
         const int (&matriz)[5][4] = horarios[k].getHorarioFinalCombinado();
         for (int i = 0; i < 5; ++i) {
-            archivo << (i == 0 ? "," : ";"); // Separador de filas
+            archivo << (i == 0 ? "," : ";");
             for (int j = 0; j < 4; ++j) {
                 archivo << matriz[i][j];
                 if (j < 3) archivo << ",";
@@ -72,7 +74,9 @@ void guardarHorariosSeccion(const string& filename, Horario* horarios, int canti
     }
     archivo.close();
 }
-    void cargarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
+
+// Carga todos los horarios de una sección
+void cargarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
     ifstream archivo(filename);
     string linea;
     int k = 0;
@@ -80,7 +84,7 @@ void guardarHorariosSeccion(const string& filename, Horario* horarios, int canti
         size_t pos = linea.find(',');
         if (pos == string::npos) continue;
         string cedula = linea.substr(0, pos);
-       // Debes tener un método setCedula en Horario o usar el constructor
+        // Si tienes setCedula en Horario, puedes usarlo aquí
 
         size_t fila_ini = pos + 1;
         for (int i = 0; i < 5; ++i) {
@@ -89,7 +93,7 @@ void guardarHorariosSeccion(const string& filename, Horario* horarios, int canti
             size_t prev = 0, curr;
             int j = 0;
             while ((curr = fila.find(',', prev)) != string::npos && j < 4) {
-                horarios[k].setHorarioValor(i, j, stoi(fila.substr(prev, curr - prev))); // Debes tener setHorarioValor
+                horarios[k].setHorarioValor(i, j, stoi(fila.substr(prev, curr - prev)));
                 prev = curr + 1;
                 ++j;
             }

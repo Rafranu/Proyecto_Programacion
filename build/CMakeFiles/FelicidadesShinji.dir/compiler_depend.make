@@ -165,7 +165,8 @@ CMakeFiles/FelicidadesShinji.dir/src/main.cpp.obj: C:/Users/PC/Documents/GitHub/
   C:/Users/PC/Documents/GitHub/Proyecto_Programacion/src/Horarios.h \
   C:/Users/PC/Documents/GitHub/Proyecto_Programacion/src/Persona_Universidad.h \
   C:/Users/PC/Documents/GitHub/Proyecto_Programacion/src/Profesor.h \
-  C:/Users/PC/Documents/GitHub/Proyecto_Programacion/src/Validaciones.h
+  C:/Users/PC/Documents/GitHub/Proyecto_Programacion/src/Validaciones.h \
+  C:/Users/PC/Documents/GitHub/Proyecto_Programacion/src/menu.h
 
 
 C:/msys64/ucrt64/include/c++/15.1.0/bits/stl_iterator_base_types.h:
@@ -173,6 +174,8 @@ C:/msys64/ucrt64/include/c++/15.1.0/bits/stl_iterator_base_types.h:
 C:/msys64/ucrt64/include/c++/15.1.0/bits/cxxabi_init_exception.h:
 
 C:/Users/PC/Documents/GitHub/Proyecto_Programacion/src/main.cpp:
+
+C:/Users/PC/Documents/GitHub/Proyecto_Programacion/src/menu.h:
 
 C:/Users/PC/Documents/GitHub/Proyecto_Programacion/thirdparty/raylib/src/raylib.h:
 

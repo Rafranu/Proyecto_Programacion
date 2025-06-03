@@ -139,6 +139,7 @@ CMakeFiles/FelicidadesShinji.dir/src/main.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.1.0/bits/ostream.tcc \
  C:/msys64/ucrt64/include/c++/15.1.0/istream \
  C:/msys64/ucrt64/include/c++/15.1.0/bits/istream.tcc \
+ C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\menu.h \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Persona_Universidad.h \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Validaciones.h \
  C:/msys64/ucrt64/include/c++/15.1.0/fstream \
