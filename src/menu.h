@@ -10,7 +10,7 @@
 #include "Validaciones.h"
 #include "Archivos.h"
 #include <fstream>
-#include "raylib.h"
+//#include "raylib.h"
 using namespace std;
 
 
@@ -19,7 +19,8 @@ void menuPrincipal(
     Estudiante Estudiante_3d1[], Estudiante Estudiante_3d2[], int& capacidad_3d1, int& capacidad_3d2,
     Profesor profesores[], int& contador_profesores,
     Asignatura asignaturas_profesor[], Asignatura asignaturas_estudiante_3d1[], Asignatura asignaturas_estudiante_3d2[],
-    Horario H_Estudiantes_3d1[], Horario H_Estudiantes_3d2[], Cruse_horarios H_Profesor[],
+    Horario H_Estudiantes_3d1[], Horario H_Estudiantes_3d2[], Cruse_horarios H_Profesor[], 
+    Cruse_horarios& Horario_Final_Combinado_3d1, Cruse_horarios& Horario_Final_Combinado_3d2,
     int capacidad_seccion, int capacidad_profesores
 ) {
     int opcion;
@@ -111,7 +112,8 @@ void menuPrincipal(
                     for (int j = i; j < capacidad_3d1 - 1; ++j) {
                             Estudiante_3d1[j] = Estudiante_3d1[j + 1];
                             asignaturas_estudiante_3d1[j]= asignaturas_estudiante_3d1[j+1];
-                                                                }
+                            H_Estudiantes_3d1[j] = H_Estudiantes_3d1[j + 1];
+                             }
                             capacidad_3d1--;
                             encontrado = true;
                             cout << "Estudiante eliminado." << endl;
@@ -124,6 +126,7 @@ void menuPrincipal(
                             for (int j = i; j < capacidad_3d2 - 1; ++j) {
                                 Estudiante_3d2[j] = Estudiante_3d2[j + 1];
                                 asignaturas_estudiante_3d2[j] = asignaturas_estudiante_3d2[j + 1];
+                                H_Estudiantes_3d2[j] = H_Estudiantes_3d2[j + 1];
                             }
                             capacidad_3d2--;
                             encontrado = true;
@@ -138,9 +141,7 @@ void menuPrincipal(
             break;
         }
                 case 3: { // Actualizar
-
-                                  
-
+                cout << "------ACTUALIZAR ESTUDIANTE------" << endl;
              string seccion_actualizar = leerSeccionValida("Ingrese la sección del estudiante a actualizar (3D1 o 3D2): ");
              string cedula_actualizar = leerCedulaValida("Ingrese la cédula del estudiante a actualizar: ");
              bool encontrado = false;
@@ -176,17 +177,17 @@ void menuPrincipal(
         for (int i = 0; i < capacidad_3d1; ++i) {         
         Estudiante_3d1[i].mostrarInformacion();
         asignaturas_estudiante_3d1[i].mostrar();
-        H_Estudiantes_3d1[i].mostrarHorarioEstudienate(Estudiante_3d1[i]);
+        H_Estudiantes_3d1[i].mostrarHorarioEstudienate();
 
 }
         cout << "--- Estudiantes 3D2 ---" << endl;
         for (int i = 0; i < capacidad_3d2; ++i) {
         Estudiante_3d2[i].mostrarInformacion();
         asignaturas_estudiante_3d2[i].mostrar();
-        H_Estudiantes_3d2[i].mostrarHorarioEstudienate(Estudiante_3d2[i]);
+        H_Estudiantes_3d2[i].mostrarHorarioEstudienate();
         }
-        H_Estudiantes_3d1[0].mostrarHorarioFinalCombinado();
-        H_Estudiantes_3d2[0].mostrarHorarioFinalCombinado();
+        Horario_Final_Combinado_3d1.mostrarHorarioFinalCombinado("3D1");
+        Horario_Final_Combinado_3d2.mostrarHorarioFinalCombinado("3D2");
             break;
 }
                 case 5: { //Llenar materias
@@ -216,7 +217,7 @@ void menuPrincipal(
                 break;
             }
                 case 6: {//Horarios
-                   string seccion = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
+    string seccion = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
     string cedula = leerCedulaValida("Ingrese la cedula del estudiante: ");
     bool encontrado = false;
     if ((seccion == "3d1") || (seccion == "3D1")) {
@@ -225,6 +226,9 @@ void menuPrincipal(
                 H_Estudiantes_3d1[i].funcion_horario_estudiante(Estudiante_3d1[i]);
                 cout << "Horario agregado" << endl;
                 encontrado = true;
+                for(int i=0;i<capacidad_3d1;i++){
+                    Horario_Final_Combinado_3d1.combinarHorariosEstudiantes(H_Estudiantes_3d1[i]);
+                }
                 break;
             }
         }
@@ -237,6 +241,9 @@ void menuPrincipal(
                 H_Estudiantes_3d2[i].funcion_horario_estudiante(Estudiante_3d2[i]);
                 cout << "Horario agregado" << endl;
                 encontrado = true;
+                for(int i=0;i<capacidad_3d2;i++){
+                    Horario_Final_Combinado_3d2.combinarHorariosEstudiantes(H_Estudiantes_3d2[i]);
+                }
                 break;
             }
         }
@@ -303,6 +310,8 @@ void menuPrincipal(
             if (profesores[i].getCedula() == cedula_eliminar) {
                 for (int j = i; j < contador_profesores - 1; ++j) {
                     profesores[j] = profesores[j + 1];
+                    asignaturas_profesor[j] = asignaturas_profesor[j + 1];
+                    H_Profesor[j] = H_Profesor[j + 1];
                 }
                 contador_profesores--;
                 encontrado = true;
@@ -367,10 +376,23 @@ void menuPrincipal(
     }
    case 7:{//Cruze Horarios
     string cedula = leerCedulaValida("Ingrese su cédula: ");
+    string seccion_reprogramacion_solicitada = leerSeccionValida("Ingrese la sección de reprogramación (3D1 o 3D2): ");
     for(int i=0; i<capacidad_profesores;i++){
-        if(cedula==profesores[i].getCedula()){
-            H_Profesor[i].compararHorariosYGenerarReprogramacion();
+     if(cedula==profesores[i].getCedula()){
+        if (seccion_reprogramacion_solicitada == "3D1" || seccion_reprogramacion_solicitada == "3d1") {
+            H_Profesor[i].setHorarioEstudiantesCombinado(Horario_Final_Combinado_3d1.getHorarioFinalCombinado());
+            H_Profesor[i].compararHorariosYGenerarReprogramacion(Horario_Final_Combinado_3d1, seccion_reprogramacion_solicitada);
+           
             break;
+        }
+        else if (seccion_reprogramacion_solicitada == "3D2" || seccion_reprogramacion_solicitada == "3d2") {
+            H_Profesor[i].setHorarioEstudiantesCombinado(Horario_Final_Combinado_3d2.getHorarioFinalCombinado());
+            H_Profesor[i].compararHorariosYGenerarReprogramacion(Horario_Final_Combinado_3d2, seccion_reprogramacion_solicitada);
+
+            break;
+        } else {
+            cout << "Sección de reprogramación no disponible." << endl;
+        }
         }
     }
 
@@ -379,11 +401,14 @@ void menuPrincipal(
    case 8:{ //Volver al menu
     break;
    }
-    default:
+    
+   
+   
+   default:
         cout << "Opcion no valido..." << endl;
         break;
     	 
-			   }}while(opcion_profesor!=6);
+			   }}while(opcion_profesor!=8);
                break;
             }
     		    case 3: cout<<"Saliendo del programa..."<<endl;break; 
@@ -401,6 +426,8 @@ void menuPrincipal(
     guardarAsignaturas("asignaturas_estudiante_3d2.csv", asignaturas_estudiante_3d2, capacidad_3d2);
     guardarHorariosSeccion("horario_estudiantes_3d1.csv", H_Estudiantes_3d1, capacidad_3d1);
     guardarHorariosSeccion("horario_estudiantes_3d2.csv", H_Estudiantes_3d2, capacidad_3d2);
+    guardarHorariosProfesores("horario_combinado_3d1.csv", &Horario_Final_Combinado_3d1, 1);
+    guardarHorariosProfesores("horario_combinado_3d2.csv", &Horario_Final_Combinado_3d2, 1);
     guardarHorariosProfesores("horario_profesores.csv", H_Profesor, contador_profesores);
   
     

@@ -57,52 +57,7 @@ int cargarProfesores(const string& filename, Profesor* profesores, int capacidad
 }
 
 
-void guardarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
-    ofstream archivo(filename);
-    for (int k = 0; k < cantidad; ++k) {
-        archivo << horarios[k].getCedula();
-        const int (&matriz)[5][4] = horarios[k].getHorarioFinalCombinado();
-        for (int i = 0; i < 5; ++i) {
-            archivo << (i == 0 ? "," : ";");
-            for (int j = 0; j < 4; ++j) {
-                archivo << matriz[i][j];
-                if (j < 3) archivo << ",";
-            }
-        }
-        archivo << endl;
-    }
-    archivo.close();
-}
 
-void cargarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
-    ifstream archivo(filename);
-    string linea;
-    int k = 0;
-    while (getline(archivo, linea) && k < cantidad) {
-        size_t pos = linea.find(',');
-        if (pos == string::npos) continue;
-        string cedula = linea.substr(0, pos);
-      
-
-        size_t fila_ini = pos + 1;
-        for (int i = 0; i < 5; ++i) {
-            size_t fila_fin = linea.find(';', fila_ini);
-            string fila = (fila_fin == string::npos) ? linea.substr(fila_ini) : linea.substr(fila_ini, fila_fin - fila_ini);
-            size_t prev = 0, curr;
-            int j = 0;
-            while ((curr = fila.find(',', prev)) != string::npos && j < 4) {
-                horarios[k].setHorarioValor(i, j, stoi(fila.substr(prev, curr - prev)));
-                prev = curr + 1;
-                ++j;
-            }
-            if (j < 4 && prev < fila.size())
-                horarios[k].setHorarioValor(i, j, stoi(fila.substr(prev)));
-            fila_ini = (fila_fin == string::npos) ? string::npos : fila_fin + 1;
-        }
-        ++k;
-    }
-    archivo.close();
-}
 
 void guardarAsignaturas(const string& filename, Asignatura* asignaturas, int cantidad) {
     ofstream archivo(filename);
@@ -169,6 +124,54 @@ void cargarHorariosProfesores(const string& filename, Cruse_horarios* horarios, 
             if (j < 4 && prev < fila.size())
                 horarios[k].setHorarioValor(i, j, stoi(fila.substr(prev)));
             fila_ini = (fila_fin == string::npos) ? string::npos : fila_fin + 1;
+        }
+        ++k;
+    }
+    archivo.close();
+}
+
+// Guardar horarios de sección SIN cédula
+void guardarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
+    ofstream archivo(filename);
+    for (int k = 0; k < cantidad; ++k) {
+        const int (&matriz)[5][4] = horarios[k].getHorarioFinalCombinado();
+        for (int i = 0; i < 5; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                archivo << matriz[i][j];
+                if (j < 3) archivo << ",";
+            }
+            if (i < 4) archivo << ";";
+        }
+        archivo << endl;
+    }
+    archivo.close();
+}
+
+// Cargar horarios de sección SIN cédula
+void cargarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
+    ifstream archivo(filename);
+    string linea;
+    int k = 0;
+    while (getline(archivo, linea) && k < cantidad) {
+        if (linea.empty()) continue;
+        size_t fila_ini = 0;
+        for (int i = 0; i < 5; ++i) {
+            size_t fila_fin = linea.find(';', fila_ini);
+            string fila = (fila_fin == string::npos) ? linea.substr(fila_ini) : linea.substr(fila_ini, fila_fin - fila_ini);
+            size_t prev = 0, curr;
+            int j = 0;
+            while ((curr = fila.find(',', prev)) != string::npos && j < 4) {
+                int valor = stoi(fila.substr(prev, curr - prev));
+                horarios[k].setHorarioValor(i, j, valor);
+                prev = curr + 1;
+                ++j;
+            }
+            if (j < 4 && prev < fila.size()) {
+                int valor = stoi(fila.substr(prev));
+                horarios[k].setHorarioValor(i, j, valor);
+            }
+            if (fila_fin == string::npos) break;
+            fila_ini = fila_fin + 1;
         }
         ++k;
     }

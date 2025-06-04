@@ -152,8 +152,4 @@ CMakeFiles/FelicidadesShinji.dir/src/main.cpp.obj: \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Asignatura.h \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Horarios.h \
  C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Cruze_horarios.h \
- C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Archivos.h \
- C:/Users/PC/Documents/GitHub/Proyecto_Programacion/thirdparty/raylib/src/raylib.h \
- C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/stdarg.h \
- C:/msys64/ucrt64/include/stdarg.h \
- C:/msys64/ucrt64/include/_mingw_stdarg.h
+ C:\Users\PC\Documents\GitHub\Proyecto_Programacion\src\Archivos.h

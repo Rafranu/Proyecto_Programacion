@@ -1,4 +1,3 @@
-
 #pragma once
 #include <iostream>
 #include <string>
@@ -82,8 +81,20 @@ public:
 
     }
 
+    void combinarHorariosEstudiantes(const Horario& otro_horario) {
+    const int (&matriz)[5][4] = otro_horario.getHorarioFinalCombinado();
+    for (int i = 0; i < dias; ++i) {
+        for (int j = 0; j < hora; ++j) {
+            if (horario_final_combinado[i][j] == 1 || matriz[i][j] == 1) {
+                horario_final_combinado[i][j] = 1;
+            } else {
+                horario_final_combinado[i][j] = 0;
+            }
+        }
+    }
+}
     // Nueva función para mostrar el horario final combinado.
-    void mostrarHorarioFinalCombinado() const { 
+    void mostrarHorarioFinalCombinado(const string& seccion) const { 
         cout << "\n\n-------------HORARIO FINAL COMBINADO DE ESTUDIANTES (Seccion: " << seccion << ")---------------- " << endl;
         cout << "------------------------------------------------------" << endl;
 
@@ -106,30 +117,37 @@ public:
         cout << "------------------------------------------------------" << endl;
     }
 
-    void mostrarHorarioEstudienate (const Estudiante& estudiante) const { 
-        
-            // IMPRIMIR HORARIO INDIVIDUAL.
-            cout << "\n-------------------HORARIO INGRESADO (Estudiante " << estudiante.getNombre() << ")------------------- " << endl;
-            cout << "------------------------------------------------------" << endl;
-
-            // horas.
-            cout << "Dia/Hora\t";
-            for (int k = 0; k < hora; k++) {
-                cout << horas_clase[k] << "\t";
+    void resetearHorario() {
+        for (int i = 0; i < dias; ++i) {
+            for (int j = 0; j < hora; ++j) {
+              if (horario_contenido[i][j] == 1) {
+                horario_final_combinado[i][j] = 0; 
+              }
+                horario_contenido[i][j] = 0;
             }
-            cout << endl;
-            cout << "------------------------------------------------------" << endl;
+        }
+        cout << "Horario reseteado." << endl;
+    }
+    void mostrarHorarioEstudienate () const { 
+    cout << "\n-------------------HORARIO INGRESADO (Estudiante "  << ")------------------- " << endl;
+    cout << "------------------------------------------------------" << endl;
 
-            // Imprimir.
-            for (int i = 0; i < dias; i++) {
-                cout << dias_semana[i] << "\t";
-                for (int j = 0; j < hora; j++) {
-                    cout << horario_contenido[i][j] << "\t";
-                }
-                cout << endl;
-            }
-            cout << "------------------------------------------------------" << endl;
-        
+    // horas.
+    cout << "Dia/Hora\t";
+    for (int k = 0; k < hora; k++) {
+        cout << horas_clase[k] << "\t";
+    }
+    cout << endl;
+    cout << "------------------------------------------------------" << endl;
 
-       }
+    // Imprimir la matriz correcta
+    for (int i = 0; i < dias; i++) {
+        cout << dias_semana[i] << "\t";
+        for (int j = 0; j < hora; j++) {
+            cout << horario_final_combinado[i][j] << "\t";
+        }
+        cout << endl;
+    }
+    cout << "------------------------------------------------------" << endl;
+}
 };

@@ -59,6 +59,7 @@ public:
         for (int i = 0; i < dias; ++i) {
             for (int j = 0; j < hora; ++j) {
                 horario_estudiantes_combinado[i][j] = horario_comb[i][j];
+                horario_final_combinado[i][j] = horario_comb[i][j]; // <- Añade esto
             }
         }
     }
@@ -93,11 +94,9 @@ public:
 
         mostrarHorarioProfesor();
     }
-
-    // Establece el horario combinado de estudiantes 
    
 
-    void compararHorariosYGenerarReprogramacion() {
+    void compararHorariosYGenerarReprogramacion(Cruse_horarios& horario_estudiantes, string seccion_reprogramacion_solicitada) {
         cout << "\n--- Realizando Comparacion de Horarios para Reprogramacion ---" << endl;
         cout << "Comparando horario del profesor con el horario combinado de la seccion " << seccion_reprogramacion_solicitada << endl;
 
