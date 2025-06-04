@@ -8,7 +8,7 @@ using namespace std;
 
 
 class Estudiante : virtual public Persona_Universidad { 
-
+protected:
     //Atributos. 
     
     string seccion;

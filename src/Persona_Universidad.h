@@ -27,9 +27,9 @@ class Persona_Universidad {
     string getCedula() const { return cedula; }
 
     string setCedula(string& nueva_cedula) { cedula = nueva_cedula; return cedula; }
-
-    //Ingresar. 
+    string setNombre(string& nuevo_nombre) { nombre = nuevo_nombre; return nombre; }
     
+    //Ingresar. 
     void solicitarDatos() {
     nombre=leerCadenaNoVacia("Ingrese el nombre: ");
     cedula=leerCedulaValida("Ingrese la cédula: ");

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// Guardar estudiantes de una sección
+
 void guardarEstudiantes(const string& filename, Estudiante* estudiantes, int cantidad) {
     ofstream archivo(filename);
     for (int i = 0; i < cantidad; ++i) {
@@ -14,7 +14,6 @@ void guardarEstudiantes(const string& filename, Estudiante* estudiantes, int can
     archivo.close();
 }
 
-// Cargar estudiantes de una sección
 int cargarEstudiantes(const string& filename, Estudiante* estudiantes, int capacidad) {
     ifstream archivo(filename);
     string linea, nombre, cedula, seccion;
@@ -57,7 +56,7 @@ int cargarProfesores(const string& filename, Profesor* profesores, int capacidad
     return cantidad;
 }
 
-// Guarda todos los horarios de una sección
+
 void guardarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
     ofstream archivo(filename);
     for (int k = 0; k < cantidad; ++k) {
@@ -75,7 +74,6 @@ void guardarHorariosSeccion(const string& filename, Horario* horarios, int canti
     archivo.close();
 }
 
-// Carga todos los horarios de una sección
 void cargarHorariosSeccion(const string& filename, Horario* horarios, int cantidad) {
     ifstream archivo(filename);
     string linea;
@@ -84,8 +82,79 @@ void cargarHorariosSeccion(const string& filename, Horario* horarios, int cantid
         size_t pos = linea.find(',');
         if (pos == string::npos) continue;
         string cedula = linea.substr(0, pos);
-        // Si tienes setCedula en Horario, puedes usarlo aquí
+      
 
+        size_t fila_ini = pos + 1;
+        for (int i = 0; i < 5; ++i) {
+            size_t fila_fin = linea.find(';', fila_ini);
+            string fila = (fila_fin == string::npos) ? linea.substr(fila_ini) : linea.substr(fila_ini, fila_fin - fila_ini);
+            size_t prev = 0, curr;
+            int j = 0;
+            while ((curr = fila.find(',', prev)) != string::npos && j < 4) {
+                horarios[k].setHorarioValor(i, j, stoi(fila.substr(prev, curr - prev)));
+                prev = curr + 1;
+                ++j;
+            }
+            if (j < 4 && prev < fila.size())
+                horarios[k].setHorarioValor(i, j, stoi(fila.substr(prev)));
+            fila_ini = (fila_fin == string::npos) ? string::npos : fila_fin + 1;
+        }
+        ++k;
+    }
+    archivo.close();
+}
+
+void guardarAsignaturas(const string& filename, Asignatura* asignaturas, int cantidad) {
+    ofstream archivo(filename);
+    for (int i = 0; i < cantidad; ++i) {
+        archivo << asignaturas[i].getCedula() << "," << asignaturas[i].get_materia() << endl;
+    }
+    archivo.close();
+}
+
+int cargarAsignaturas(const string& filename, Asignatura* asignaturas, int capacidad) {
+    ifstream archivo(filename);
+    string linea, cedula, materias;
+    int cantidad = 0;
+    while (getline(archivo, linea) && cantidad < capacidad) {
+        size_t p1 = linea.find(',');
+        if (p1 == string::npos) continue;
+        cedula = linea.substr(0, p1);
+        materias = linea.substr(p1 + 1);
+        asignaturas[cantidad] = Asignatura("", cedula, "", materias);
+        cantidad++;
+    }
+    archivo.close();
+    return cantidad;
+}
+
+
+void guardarHorariosProfesores(const string& filename, Cruse_horarios* horarios, int cantidad) {
+    ofstream archivo(filename);
+    for (int k = 0; k < cantidad; ++k) {
+        archivo << horarios[k].getCedula();
+        const int (&matriz)[5][4] = horarios[k].getHorarioFinalCombinado();
+        for (int i = 0; i < 5; ++i) {
+            archivo << (i == 0 ? "," : ";");
+            for (int j = 0; j < 4; ++j) {
+                archivo << matriz[i][j];
+                if (j < 3) archivo << ",";
+            }
+        }
+        archivo << endl;
+    }
+    archivo.close();
+}
+
+void cargarHorariosProfesores(const string& filename, Cruse_horarios* horarios, int cantidad) {
+    ifstream archivo(filename);
+    string linea;
+    int k = 0;
+    while (getline(archivo, linea) && k < cantidad) {
+        size_t pos = linea.find(',');
+        if (pos == string::npos) continue;
+        string cedula = linea.substr(0, pos);
+        
         size_t fila_ini = pos + 1;
         for (int i = 0; i < 5; ++i) {
             size_t fila_fin = linea.find(';', fila_ini);

@@ -13,11 +13,8 @@
 #include "raylib.h"
 using namespace std;
 
-//Variables constantes.
 
 
-
-// Aquí va la función del menú principal y submenús
 void menuPrincipal(
     Estudiante Estudiante_3d1[], Estudiante Estudiante_3d2[], int& capacidad_3d1, int& capacidad_3d2,
     Profesor profesores[], int& contador_profesores,
@@ -32,8 +29,7 @@ void menuPrincipal(
     	cout<<"2.Modulo Profesor."<<endl;
     	cout<<"3.Salir del programa."<<endl;
     	opcion = leerOpcionMenu("Opcion: ", 1, 3);
-    	
-    	//Casos. 
+
     	
     	        switch(opcion){
     	        case 1: { //Modulo estudiante
@@ -55,34 +51,54 @@ void menuPrincipal(
     	       //Casos. 
     	         switch(opcion_estudiante) {
                 case 1: { // Ingresar
-             string seccion = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
-            
-            if ((seccion == "3D1")||(seccion=="3d1")) {
-                cout << "Ingresando estudiante a 3D1..." << endl;
-                if (capacidad_3d1 < capacidad_seccion) {
-                        Estudiante_3d1[capacidad_3d1].solicitarDatos();
-                       Estudiante_3d1[capacidad_3d1].setSeccion(seccion);
-                        capacidad_3d1++;
-               
-                cout << "Estudiante ingresado correctamente." << endl;
-            } else {
-                cout << "No hay espacio para más estudiantes en 3D1." << endl;
+    string seccion = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
+    string cedula_nueva = leerCedulaValida("Ingrese la cédula del estudiante: ");
+    string nombre= leerCadenaNoVacia("Ingrese el nombre del estudiante: ");
+    bool repetido = false;
+
+    if ((seccion == "3D1") || (seccion == "3d1")) {
+        
+        for (int i = 0; i < capacidad_3d1; ++i) {
+            if (Estudiante_3d1[i].getCedula() == cedula_nueva) {
+                repetido = true;
+                break;
             }
-                } else if ((seccion == "3D2")||(seccion=="3d2")) {
-                cout << "Ingresando estudiante a 3D2..." << endl;
-                if (capacidad_3d2 < capacidad_seccion) {
-                    Estudiante_3d2[capacidad_3d2].solicitarDatos();
-                    Estudiante_3d2[capacidad_3d2].setSeccion(seccion);
-                    capacidad_3d2++;
-                    cout << "Estudiante ingresado correctamente." << endl;
-                } else {
-                    cout << "No hay espacio para más estudiantes en 3D2." << endl;
-                }
-            } else {
-                cout << "Sección inválida. Debe ser 3D1 o 3D2." << endl;
+        }
+        if (repetido) {
+            cout << "Ya existe un estudiante con esa cédula en 3D1." << endl;
+        } else if (capacidad_3d1 < capacidad_seccion) {
+            Estudiante_3d1[capacidad_3d1].setCedula(cedula_nueva);
+            Estudiante_3d1[capacidad_3d1].setNombre(nombre);
+            Estudiante_3d1[capacidad_3d1].setSeccion(seccion);
+            capacidad_3d1++;
+            cout << "Estudiante ingresado correctamente." << endl;
+        } else {
+            cout << "No hay espacio para más estudiantes en 3D1." << endl;
+        }
+    } else if ((seccion == "3D2") || (seccion == "3d2")) {
+        
+        for (int i = 0; i < capacidad_3d2; ++i) {
+            if (Estudiante_3d2[i].getCedula() == cedula_nueva) {
+                repetido = true;
+                break;
             }
-            break;
-        }          
+        }
+        if (repetido) {
+            cout << "Ya existe un estudiante con esa cédula en 3D2." << endl;
+        } else if (capacidad_3d2 < capacidad_seccion) {
+            Estudiante_3d2[capacidad_3d2].setCedula(cedula_nueva);
+            Estudiante_3d2[capacidad_3d2].setNombre(nombre);
+            Estudiante_3d2[capacidad_3d2].setSeccion(seccion);
+            capacidad_3d2++;
+            cout << "Estudiante ingresado correctamente." << endl;
+        } else {
+            cout << "No hay espacio para más estudiantes en 3D2." << endl;
+        }
+    } else {
+        cout << "Sección inválida. Debe ser 3D1 o 3D2." << endl;
+    }
+    break;
+}          
                 case 2: { // Eliminar
                 string cedula_eliminar = leerCedulaValida("Ingrese la cedula del estudiante a eliminar ");
                 
@@ -160,15 +176,17 @@ void menuPrincipal(
         for (int i = 0; i < capacidad_3d1; ++i) {         
         Estudiante_3d1[i].mostrarInformacion();
         asignaturas_estudiante_3d1[i].mostrar();
-        H_Estudiantes_3d1[i].mostrarHorarioFinalCombinado(Estudiante_3d1[i]);
+        H_Estudiantes_3d1[i].mostrarHorarioEstudienate(Estudiante_3d1[i]);
 
 }
         cout << "--- Estudiantes 3D2 ---" << endl;
         for (int i = 0; i < capacidad_3d2; ++i) {
         Estudiante_3d2[i].mostrarInformacion();
         asignaturas_estudiante_3d2[i].mostrar();
-        H_Estudiantes_3d2[i].mostrarHorarioFinalCombinado(Estudiante_3d2[i]);
+        H_Estudiantes_3d2[i].mostrarHorarioEstudienate(Estudiante_3d2[i]);
         }
+        H_Estudiantes_3d1[0].mostrarHorarioFinalCombinado();
+        H_Estudiantes_3d2[0].mostrarHorarioFinalCombinado();
             break;
 }
                 case 5: { //Llenar materias
@@ -198,33 +216,38 @@ void menuPrincipal(
                 break;
             }
                 case 6: {//Horarios
-                      string seccion = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
-                string cedula=leerCedulaValida("Ingrese la cedula del estudiante: ");
-                    if((seccion=="3d1")||(seccion=="3D1")){
-                                  for (int i = 0; i < capacidad_3d1; ++i) {
-                                     if (Estudiante_3d1[i].getCedula() == cedula) {
-                                        H_Estudiantes_3d1[i].funcion_horario_estudiante(Estudiante_3d1[i]);
-                                      
-                                        cout<<"Horario agragado"<<endl;
-                                   }    break;
-                                     }
-                            }
-                            else if((seccion=="3d2")||(seccion=="3D2")){
-                                  for (int i = 0; i < capacidad_3d2; ++i) {
-                                     if (Estudiante_3d2[i].getCedula() == cedula) {
-                                        H_Estudiantes_3d2[i].funcion_horario_estudiante(Estudiante_3d2[i]);
-                                     
-                                        cout<<"Horario agragado"<<endl;
-                                   }    break;
-                                     }
-                            }
-                            else{
-                                cout<<"Seccion no valida"<<endl;
-                            }
-
-
-
-                   break; }
+                   string seccion = leerSeccionValida("Ingrese la sección (3D1 o 3D2): ");
+    string cedula = leerCedulaValida("Ingrese la cedula del estudiante: ");
+    bool encontrado = false;
+    if ((seccion == "3d1") || (seccion == "3D1")) {
+        for (int i = 0; i < capacidad_3d1; ++i) {
+            if (Estudiante_3d1[i].getCedula() == cedula) {
+                H_Estudiantes_3d1[i].funcion_horario_estudiante(Estudiante_3d1[i]);
+                cout << "Horario agregado" << endl;
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            cout << "Estudiante no encontrado en 3D1." << endl;
+        }
+    } else if ((seccion == "3d2") || (seccion == "3D2")) {
+        for (int i = 0; i < capacidad_3d2; ++i) {
+            if (Estudiante_3d2[i].getCedula() == cedula) {
+                H_Estudiantes_3d2[i].funcion_horario_estudiante(Estudiante_3d2[i]);
+                cout << "Horario agregado" << endl;
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) {
+            cout << "Estudiante no encontrado en 3D2." << endl;
+        }
+    } else {
+        cout << "Seccion no valida" << endl;
+    }
+    break;
+}
                 case 7: {
                 // Volver al menu principal
                 break;
@@ -370,9 +393,15 @@ void menuPrincipal(
     	
 	    }while(opcion!=3); 
     
-guardarEstudiantes("estudiantes_3d1.csv", Estudiante_3d1, capacidad_3d1);
-guardarEstudiantes("estudiantes_3d2.csv", Estudiante_3d2, capacidad_3d2);
-guardarProfesores("profesores.csv", profesores, contador_profesores);
-    //Fin del programa.
+    guardarEstudiantes("estudiantes_3d1.csv", Estudiante_3d1, capacidad_3d1);
+    guardarEstudiantes("estudiantes_3d2.csv", Estudiante_3d2, capacidad_3d2);
+    guardarProfesores("profesores.csv", profesores, contador_profesores);
+    guardarAsignaturas("asignaturas_profesor.csv", asignaturas_profesor, contador_profesores);
+    guardarAsignaturas("asignaturas_estudiante_3d1.csv", asignaturas_estudiante_3d1, capacidad_3d1);
+    guardarAsignaturas("asignaturas_estudiante_3d2.csv", asignaturas_estudiante_3d2, capacidad_3d2);
+    guardarHorariosSeccion("horario_estudiantes_3d1.csv", H_Estudiantes_3d1, capacidad_3d1);
+    guardarHorariosSeccion("horario_estudiantes_3d2.csv", H_Estudiantes_3d2, capacidad_3d2);
+    guardarHorariosProfesores("horario_profesores.csv", H_Profesor, contador_profesores);
+  
     
 }

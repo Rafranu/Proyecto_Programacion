@@ -80,6 +80,34 @@ public:
             }
             
 
+    }
+
+    // Nueva función para mostrar el horario final combinado.
+    void mostrarHorarioFinalCombinado() const { 
+        cout << "\n\n-------------HORARIO FINAL COMBINADO DE ESTUDIANTES (Seccion: " << seccion << ")---------------- " << endl;
+        cout << "------------------------------------------------------" << endl;
+
+        // Imprimir las horas de clase en la cabecera
+        cout << "Dia/Hora\t";
+        for (int k = 0; k < hora; k++) {
+            cout << horas_clase[k] << "\t";
+        }
+        cout << endl;
+        cout << "------------------------------------------------------" << endl;
+
+        // Imprimir la matriz final del horario
+        for (int i = 0; i < dias; i++) {
+            cout << dias_semana[i] << "\t";
+            for (int j = 0; j < hora; j++) {
+                cout << horario_final_combinado[i][j] << "\t";
+            }
+            cout << endl;
+        }
+        cout << "------------------------------------------------------" << endl;
+    }
+
+    void mostrarHorarioEstudienate (const Estudiante& estudiante) const { 
+        
             // IMPRIMIR HORARIO INDIVIDUAL.
             cout << "\n-------------------HORARIO INGRESADO (Estudiante " << estudiante.getNombre() << ")------------------- " << endl;
             cout << "------------------------------------------------------" << endl;
@@ -103,30 +131,5 @@ public:
             cout << "------------------------------------------------------" << endl;
         
 
-       
-    }
-
-    // Nueva función para mostrar el horario final combinado.
-    void mostrarHorarioFinalCombinado(const Estudiante& estudiante) const { 
-        cout << "\n\n-------------HORARIO FINAL COMBINADO DE ESTUDIANTES (Seccion: " << estudiante.getSeccion() << ")---------------- " << endl;
-        cout << "------------------------------------------------------" << endl;
-
-        // Imprimir las horas de clase en la cabecera
-        cout << "Dia/Hora\t";
-        for (int k = 0; k < hora; k++) {
-            cout << horas_clase[k] << "\t";
-        }
-        cout << endl;
-        cout << "------------------------------------------------------" << endl;
-
-        // Imprimir la matriz final del horario
-        for (int i = 0; i < dias; i++) {
-            cout << dias_semana[i] << "\t";
-            for (int j = 0; j < hora; j++) {
-                cout << horario_final_combinado[i][j] << "\t";
-            }
-            cout << endl;
-        }
-        cout << "------------------------------------------------------" << endl;
-    }
+       }
 };

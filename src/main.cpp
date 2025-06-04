@@ -6,18 +6,14 @@
 #include "raylib.h"
 using namespace std;
 
-//Variables constantes.
 
-//Estudiantes por seccion.
-//Profesores y asignaturas.
 const int capacidad_profesores = 5;
 const int capacidad_asignaturas = 6;
 
 
 
-//Funcion principal.
 int main() {
-//Variables
+
 Estudiante Estudiante_3d1[capacidad_seccion];
 Estudiante Estudiante_3d2[capacidad_seccion];
 Profesor profesores[capacidad_profesores];
@@ -32,13 +28,19 @@ int capacidad_3d2 = 0;
 int contador_profesores = 0;
 int contador_asignaturas = 0;
 int opcion;
+
 capacidad_3d1 = cargarEstudiantes("estudiantes_3d1.csv", Estudiante_3d1, capacidad_seccion);
-cargarHorariosSeccion("horario_estudiantes_3d1.csv", H_Estudiantes_3d1, capacidad_3d1);
 capacidad_3d2 = cargarEstudiantes("estudiantes_3d2.csv", Estudiante_3d2, capacidad_seccion);
-contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_profesores);  
+cargarHorariosSeccion("horario_estudiantes_3d1.csv", H_Estudiantes_3d1, capacidad_3d1);
+cargarHorariosSeccion("horario_estudiantes_3d2.csv", H_Estudiantes_3d2, capacidad_3d2);
+cargarAsignaturas("asignaturas_estudiante_3d1.csv", asignaturas_estudiante_3d1, capacidad_3d1);
+cargarAsignaturas("asignaturas_estudiante_3d2.csv", asignaturas_estudiante_3d2, capacidad_3d2);
+contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_profesores);
+cargarAsignaturas("asignaturas_profesor.csv", asignaturas_profesor, contador_profesores);
+cargarHorariosProfesores("horario_profesores.csv", H_Profesor, contador_profesores);
+    
 
-
-    menuPrincipal(
+menuPrincipal(
         Estudiante_3d1, Estudiante_3d2, capacidad_3d1, capacidad_3d2,
         profesores, contador_profesores,
         asignaturas_profesor, asignaturas_estudiante_3d1, asignaturas_estudiante_3d2,
@@ -46,9 +48,7 @@ contador_profesores = cargarProfesores("profesores.csv", profesores, capacidad_p
         capacidad_seccion, capacidad_profesores
     );
 
-    guardarEstudiantes("estudiantes_3d1.csv", Estudiante_3d1, capacidad_3d1);
-    guardarEstudiantes("estudiantes_3d2.csv", Estudiante_3d2, capacidad_3d2);
-    guardarProfesores("profesores.csv", profesores, contador_profesores);
+  
 
     return 0;
 }

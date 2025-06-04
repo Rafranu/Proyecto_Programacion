@@ -6,20 +6,24 @@ using namespace std;
 
 // Función para validar un entero dentro de un rango
  int leerEnteroEnRango(const string& mensaje, int min, int max) {
-    int valor;
     string entrada;
+    int valor;
     while (true) {
         cout << mensaje;
-       cin>>valor;
-            
-            if (valor >= min && valor <= max) {
-                return valor;
-            } else {
-                cout << "Valor fuera de rango (" << min << "-" << max << "). Intente de nuevo." << endl;
-            }
-        
+        getline(cin, entrada);
+        try {
+            valor = stoi(entrada);
+        } catch (...) {
+            cout << "Entrada inválida. Debe ser un número entero." << endl;
+            continue;
+        }
+        if (valor >= min && valor <= max) {
+            return valor;
+        } else {
+            cout << "Valor fuera de rango (" << min << "-" << max << "). Intente de nuevo." << endl;
         }
     }
+}
 
 // Función para leer una cadena no vacía
 string leerCadenaNoVacia(const string& mensaje) {
